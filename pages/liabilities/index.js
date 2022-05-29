@@ -83,7 +83,7 @@ const Liabilities = () => {
           <div>
             <label htmlFor="title">Title</label>
             <input
-              className="border rounded border-slate-600"
+              className="w-full border rounded border-slate-600"
               id="title"
               value={state.title}
               onChange={(e) =>
@@ -94,7 +94,7 @@ const Liabilities = () => {
           <div>
             <label htmlFor="amount">Amount</label>
             <input
-              className="border rounded border-slate-600"
+              className="w-full border rounded border-slate-600"
               id="amount"
               value={state.amount}
               onChange={(e) =>
@@ -119,10 +119,10 @@ const Liabilities = () => {
           }}
         >
           <div className="flex">
-            <div>
+            <div className="">
               <label htmlFor="extitle">Expenses</label>
               <input
-                className="border rounded border-slate-600"
+                className="w-full border rounded border-slate-600"
                 id="extitle"
                 value={expState.title}
                 onChange={(e) =>
@@ -134,7 +134,7 @@ const Liabilities = () => {
             <div>
               <label htmlFor="examount">Amount</label>
               <input
-                className="border rounded border-slate-600"
+                className="w-full border rounded border-slate-600"
                 id="examount"
                 value={expState.amount}
                 onChange={(e) =>
