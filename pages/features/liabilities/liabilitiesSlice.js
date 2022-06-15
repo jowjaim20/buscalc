@@ -1,89 +1,61 @@
-import { createSlice, current } from "@reduxjs/toolkit";
+import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
   liabilities: [],
-  liability: {
-    id: "",
-    title: "",
-    amount: 0,
-    expenses: [],
-  },
-  expense: {
-    id: "",
-    title: "",
-    amount: 0,
-  },
+  add: false,
   edit: false,
 };
 const liabilitiesSlice = createSlice({
   name: "liabilities",
   initialState,
   reducers: {
-    addExpenseTitle: (state, { payload }) => {
-      state.expense.title = payload;
+    toggleEdit: (state) => {
+      state.edit = !state.edit;
     },
-    addExpenseAmount: (state, { payload }) => {
-      state.expense.amount = payload;
+    tooggleAdd: (state) => {
+      state.add = !state.add;
     },
-    addExpenses: (state) => {
-      console.log(state);
-      const newExpense = {
-        ...state.expense,
-        id: Math.floor(Math.random() * 100000000),
-      };
-      state.liability.expenses.push(newExpense);
-      state.expense.amount = "";
-      state.expense.title = "";
+    addLiability: (state, { payload }) => {
+      state.liabilities.push(payload);
     },
-    removeExpenses: (state, { payload }) => {
-      const neww = state.liabilities.filter(
-        (liability) => liability.id === payload.id2
+
+    deleteLiability: (state, { payload }) => {
+      state.liabilities = state.liabilities.filter(
+        (liability) => liability.id !== payload
       );
-      //   console.log(JSON.stringify(neww));
-      const sss = state.liabilities.filter(
+    },
+    removeLiabilityExpense: (state, { payload }) => {
+      const index = state.liabilities.findIndex(
         (liability) => liability.id === payload.id2
       );
 
-      state.liabilities.find(
-        (liability) => liability.id === payload.id2
-      ).expenses = sss[0].expenses.filter((exp) => exp.id !== payload.id1);
-    },
-    LiabilityTotalExpenses: (state, { payload }) => {
-      const total = payload.reduce(
-        (acc, liability) => acc + liability.amount,
-        0
+      const newExpenses = state.liabilities[index].expenses.filter(
+        (exp) => exp.id !== payload.id1
       );
-      state.liability.amount = total;
+
+      state.liabilities[index].expenses = newExpenses;
+      state.liabilities[index].amount = state.liabilities[
+        index
+      ].expenses.reduce((acc, expense) => acc + expense.amount, 0);
+
+      // console.log(JSON.stringify(exps, undefined, 2));
     },
-    addLiabilityTitle: (state, { payload }) => {
-      state.liability.title = payload;
-    },
-    addLiability: (state) => {
-      const newLiability = {
-        ...state.liability,
-        id: Math.floor(Math.random() * 100000000),
-      };
-      state.liabilities.push(newLiability);
-      state.liability = {
-        id: "",
-        title: "",
-        amount: 0,
-        expenses: [],
-      };
-    },
-    setEdit: (state) => {
-      state.edit = !state.edit;
+    UpdateLiability: (state, { payload }) => {
+      const index = state.liabilities.findIndex(
+        (liability) => liability.id === payload.id
+      );
+
+      state.liabilities[index] = payload;
+      // console.log(JSON.stringify(exps, undefined, 2));
     },
   },
 });
 export const {
-  LiabilityTotalExpenses,
-  addExpenseTitle,
-  addExpenseAmount,
-  addExpenses,
-  removeExpenses,
-  addLiabilityTitle,
+  UpdateLiability,
+  toggleEdit,
+  tooggleAdd,
   addLiability,
-  setEdit,
+  deleteLiability,
+  removeLiabilityExpense,
 } = liabilitiesSlice.actions;
 export default liabilitiesSlice.reducer;

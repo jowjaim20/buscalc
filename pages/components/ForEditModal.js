@@ -1,25 +1,26 @@
 import React from "react";
 import { useSelector, useDispatch } from "react-redux";
+
 import {
-  addLiabilityTitle,
-  addLiabilityExpense,
-  removeExpenseModal,
-  clearLiability,
-  updateAmount,
-} from "../features/liabilities/liabilitySlice";
-import {
-  addLiability,
-  tooggleAdd,
+  toggleEdit,
+  UpdateLiability,
 } from "../features/liabilities/liabilitiesSlice";
 import {
   addExpenseTitle,
   addExpenseAmount,
   clearExpense,
 } from "../features/liabilities/expenseSlice";
+import {
+  forEditAddLiabilityTitle,
+  forEditClearLiability,
+  forEditPushLiabilityExpense,
+  forEditRemoveExpenseModal,
+  forEditUpdateAmount,
+} from "../features/liabilities/forEditLiabilitySlice";
 
-const Modal = () => {
-  const { add } = useSelector((state) => state.liabilities);
-  const { liability } = useSelector((state) => state.liability);
+const ForEditModal = () => {
+  const { forEditLiability } = useSelector((state) => state.forEditLiability);
+  const { edit } = useSelector((state) => state.liabilities);
   const { expense } = useSelector((state) => state.expense);
 
   const dispatch = useDispatch();
@@ -28,33 +29,33 @@ const Modal = () => {
     <div className="flex items-center justify-center w-full ">
       <div
         className="absolute w-full h-screen bg-opacity-25 bg-slate-900 -10"
-        onClick={() => dispatch(tooggleAdd())}
+        onClick={() => dispatch(toggleEdit())}
       ></div>
       <div className="absolute z-30 flex items-center justify-center w-4/6 inset-y-64">
         <div className="shadow-md shadow-slate-900 ">
-          <article className="w-full p-3 text-lg font-bold text-center uppercase bg-blue-500">
+          <article className="w-full p-3 text-lg font-bold text-center uppercase bg-green-500">
             <section className="flex gap-4">
               <div className="w-1/2">
                 <div className="flex flex-col items-start justify-start">
-                  <p>amount:{liability.amount}</p>
+                  <p>amount:{forEditLiability.amount}</p>
                 </div>
               </div>
               <div className="flex flex-col">
                 <h3>expenses</h3>
-                {liability.expenses.map((exp) => (
+                {forEditLiability.expenses.map((exp) => (
                   <div className="flex gap-2" key={exp.id}>
                     <h4>{exp.title}</h4>
                     <p>{exp.amount}</p>
                     <button
                       className={`flex justify-center items-center px-6 py-1 text-white ${
-                        add ? "bg-red-600" : "bg-yellow-400"
+                        edit ? "bg-red-600" : "bg-yellow-400"
                       } rounded ${
-                        add ? "hover:bg-red-400" : "hover:bg-yellow-300"
+                        edit ? "hover:bg-red-400" : "hover:bg-yellow-300"
                       } 
-              } rounded ${add ? "" : "hidden"} `}
+              } rounded ${edit ? "" : "hidden"} `}
                       onClick={() => {
-                        dispatch(removeExpenseModal(exp.id));
-                        dispatch(updateAmount());
+                        dispatch(forEditRemoveExpenseModal(exp.id));
+                        dispatch(forEditUpdateAmount());
                       }}
                     >
                       delete
@@ -65,25 +66,27 @@ const Modal = () => {
             </section>
           </article>
           <section>
-            <div className="flex items-center justify-center w-full p-3 text-lg font-bold text-center uppercase bg-blue-300">
+            <div className="flex items-center justify-center w-full p-3 text-lg font-bold text-center uppercase bg-green-300">
               <div>
                 <label htmlFor="title">Title</label>
                 <input
                   className="w-full border rounded border-slate-600"
                   id="title"
-                  value={liability.title}
-                  onChange={(e) => dispatch(addLiabilityTitle(e.target.value))}
+                  value={forEditLiability.title}
+                  onChange={(e) =>
+                    dispatch(forEditAddLiabilityTitle(e.target.value))
+                  }
                 ></input>
               </div>
             </div>
             <h3 className="flex flex-col"></h3>
 
             <form
-              className="flex flex-col items-center justify-center w-full gap-4 p-3 text-lg font-bold text-center uppercase bg-blue-800"
+              className="flex flex-col items-center justify-center w-full gap-4 p-3 text-lg font-bold text-center uppercase bg-green-800"
               onSubmit={(e) => {
                 e.preventDefault();
-                dispatch(addLiabilityExpense(expense));
-                dispatch(updateAmount());
+                dispatch(forEditPushLiabilityExpense(expense));
+                dispatch(forEditUpdateAmount());
                 dispatch(clearExpense());
               }}
             >
@@ -124,14 +127,14 @@ const Modal = () => {
               </button>
               <button
                 onClick={() => {
-                  dispatch(addLiability(liability));
-                  dispatch(clearLiability(liability));
-                  dispatch(tooggleAdd());
+                  dispatch(UpdateLiability(forEditLiability));
+                  dispatch(forEditClearLiability());
+                  dispatch(toggleEdit());
                 }}
                 type="button"
                 className="flex items-center justify-center px-6 py-1 text-white bg-green-600 rounded hover:bg-green-400"
               >
-                Add Liability
+                Save
               </button>
             </form>
           </section>
@@ -141,4 +144,4 @@ const Modal = () => {
   );
 };
 
-export default Modal;
+export default ForEditModal;
