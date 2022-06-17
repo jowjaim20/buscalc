@@ -14,10 +14,10 @@ const Liabilities = () => {
         onClick={() => dispatch(tooggleAdd())}
         type="button"
         className={`w-full flex justify-center items-center px-6 py-1 text-white ${
-          edit ? "bg-red-600" : "bg-green-400"
-        } rounded ${edit ? "hover:bg-red-400" : "hover:bg-green-300"} `}
+          edit || add ? "bg-red-600" : "bg-green-400"
+        } rounded ${edit || add ? "hover:bg-red-400" : "hover:bg-green-300"} `}
       >
-        {edit ? "Close" : "Add"}
+        {edit || add ? "Close" : "Add"}
       </button>
       {add && <Modal />}
       {edit && <ForEditModal />}

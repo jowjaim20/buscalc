@@ -1,4 +1,4 @@
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import {
   forEditAddLiabilityExpense,
   forEditAddLiabilityId,
@@ -11,6 +11,7 @@ import {
   deleteLiability,
   toggleEdit,
 } from "../features/liabilities/liabilitiesSlice";
+import Button, { RedButton } from "./Button";
 
 const Liability = ({ liability }) => {
   const dispatch = useDispatch();
@@ -34,9 +35,7 @@ const Liability = ({ liability }) => {
             <div className="flex gap-2" key={exp.id}>
               <h4>{exp.title}</h4>
               <p>{exp.amount}</p>
-              <button
-                className={`flex justify-center items-center px-6 py-1 text-white bg-red-600
-             rounded `}
+              <RedButton
                 onClick={() =>
                   dispatch(
                     removeLiabilityExpense({ id1: exp.id, id2: liability.id })
@@ -44,13 +43,13 @@ const Liability = ({ liability }) => {
                 }
               >
                 delete
-              </button>
+              </RedButton>
             </div>
           ))}
         </div>
       </section>
       <div className="absolute top-0 flex items-center justify-center gap-1 right-3">
-        <button
+        <Button
           onClick={() => {
             dispatch(toggleEdit());
             dispatch(forEditAddLiabilityExpense(liability.expenses));
@@ -58,16 +57,12 @@ const Liability = ({ liability }) => {
             dispatch(forEditAddLiabilityId(liability.id));
             dispatch(forEditUpdateAmount());
           }}
-          className="px-4 py-1 text-center bg-green-300 rounded"
         >
           edit
-        </button>
-        <button
-          onClick={() => dispatch(deleteLiability(liability.id))}
-          className="px-2 py-1 text-center bg-red-500 rounded"
-        >
+        </Button>
+        <RedButton onClick={() => dispatch(deleteLiability(liability.id))}>
           x
-        </button>
+        </RedButton>
       </div>
     </article>
   );

@@ -37,8 +37,6 @@ const liabilitiesSlice = createSlice({
       state.liabilities[index].amount = state.liabilities[
         index
       ].expenses.reduce((acc, expense) => acc + expense.amount, 0);
-
-      // console.log(JSON.stringify(exps, undefined, 2));
     },
     UpdateLiability: (state, { payload }) => {
       const index = state.liabilities.findIndex(
@@ -46,7 +44,6 @@ const liabilitiesSlice = createSlice({
       );
 
       state.liabilities[index] = payload;
-      // console.log(JSON.stringify(exps, undefined, 2));
     },
   },
 });

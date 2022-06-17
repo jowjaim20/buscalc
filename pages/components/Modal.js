@@ -16,9 +16,9 @@ import {
   addExpenseAmount,
   clearExpense,
 } from "../features/liabilities/expenseSlice";
+import Button, { RedButton } from "./Button";
 
 const Modal = () => {
-  const { add } = useSelector((state) => state.liabilities);
   const { liability } = useSelector((state) => state.liability);
   const { expense } = useSelector((state) => state.expense);
 
@@ -45,20 +45,14 @@ const Modal = () => {
                   <div className="flex gap-2" key={exp.id}>
                     <h4>{exp.title}</h4>
                     <p>{exp.amount}</p>
-                    <button
-                      className={`flex justify-center items-center px-6 py-1 text-white ${
-                        add ? "bg-red-600" : "bg-yellow-400"
-                      } rounded ${
-                        add ? "hover:bg-red-400" : "hover:bg-yellow-300"
-                      } 
-              } rounded ${add ? "" : "hidden"} `}
+                    <RedButton
                       onClick={() => {
                         dispatch(removeExpenseModal(exp.id));
                         dispatch(updateAmount());
                       }}
                     >
                       delete
-                    </button>
+                    </RedButton>
                   </div>
                 ))}
               </div>
@@ -76,7 +70,6 @@ const Modal = () => {
                 ></input>
               </div>
             </div>
-            <h3 className="flex flex-col"></h3>
 
             <form
               className="flex flex-col items-center justify-center w-full gap-4 p-3 text-lg font-bold text-center uppercase bg-blue-800"
@@ -105,7 +98,7 @@ const Modal = () => {
                     Amount
                   </label>
                   <input
-                    className="w-full border rounded border-slate-600"
+                    className="w-full border border-indigo-400 rounded"
                     id="examount"
                     value={expense.amount}
                     onChange={(e) =>
@@ -115,24 +108,16 @@ const Modal = () => {
                   ></input>
                 </div>
               </div>
-
-              <button
-                type="submit"
-                className="flex items-center justify-center px-6 py-1 text-white bg-green-600 rounded hover:bg-green-400"
-              >
-                Add Expense
-              </button>
-              <button
+              <Button type="submit">Add Expense</Button>
+              <Button
                 onClick={() => {
                   dispatch(addLiability(liability));
                   dispatch(clearLiability(liability));
                   dispatch(tooggleAdd());
                 }}
-                type="button"
-                className="flex items-center justify-center px-6 py-1 text-white bg-green-600 rounded hover:bg-green-400"
               >
                 Add Liability
-              </button>
+              </Button>
             </form>
           </section>
         </div>

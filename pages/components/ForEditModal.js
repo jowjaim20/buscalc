@@ -17,10 +17,10 @@ import {
   forEditRemoveExpenseModal,
   forEditUpdateAmount,
 } from "../features/liabilities/forEditLiabilitySlice";
+import Button, { RedButton } from "./Button";
 
 const ForEditModal = () => {
   const { forEditLiability } = useSelector((state) => state.forEditLiability);
-  const { edit } = useSelector((state) => state.liabilities);
   const { expense } = useSelector((state) => state.expense);
 
   const dispatch = useDispatch();
@@ -46,20 +46,14 @@ const ForEditModal = () => {
                   <div className="flex gap-2" key={exp.id}>
                     <h4>{exp.title}</h4>
                     <p>{exp.amount}</p>
-                    <button
-                      className={`flex justify-center items-center px-6 py-1 text-white ${
-                        edit ? "bg-red-600" : "bg-yellow-400"
-                      } rounded ${
-                        edit ? "hover:bg-red-400" : "hover:bg-yellow-300"
-                      } 
-              } rounded ${edit ? "" : "hidden"} `}
+                    <RedButton
                       onClick={() => {
                         dispatch(forEditRemoveExpenseModal(exp.id));
                         dispatch(forEditUpdateAmount());
                       }}
                     >
                       delete
-                    </button>
+                    </RedButton>
                   </div>
                 ))}
               </div>
@@ -79,7 +73,6 @@ const ForEditModal = () => {
                 ></input>
               </div>
             </div>
-            <h3 className="flex flex-col"></h3>
 
             <form
               className="flex flex-col items-center justify-center w-full gap-4 p-3 text-lg font-bold text-center uppercase bg-green-800"
@@ -119,23 +112,16 @@ const ForEditModal = () => {
                 </div>
               </div>
 
-              <button
-                type="submit"
-                className="flex items-center justify-center px-6 py-1 text-white bg-green-600 rounded hover:bg-green-400"
-              >
-                Add Expense
-              </button>
-              <button
+              <Button type="submit">Add Expense</Button>
+              <Button
                 onClick={() => {
                   dispatch(UpdateLiability(forEditLiability));
                   dispatch(forEditClearLiability());
                   dispatch(toggleEdit());
                 }}
-                type="button"
-                className="flex items-center justify-center px-6 py-1 text-white bg-green-600 rounded hover:bg-green-400"
               >
                 Save
-              </button>
+              </Button>
             </form>
           </section>
         </div>
