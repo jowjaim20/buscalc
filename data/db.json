@@ -1,0 +1,16 @@
+{
+  "liabilities": [
+    {
+      "id": 722,
+      "title": "Home",
+      "amount": 7967,
+      "expenses": [
+        {
+          "id": 7026,
+          "title": "Hommeee",
+          "amount": 7967
+        }
+      ]
+    }
+  ]
+}

@@ -10,6 +10,8 @@ import {
   removeLiabilityExpense,
   deleteLiability,
   toggleEdit,
+  deleteData,
+  deleteExpeseData,
 } from "../features/liabilities/liabilitiesSlice";
 import Button, { RedButton } from "./Button";
 
@@ -20,7 +22,7 @@ const Liability = ({ liability }) => {
     <article className="relative p-3 text-lg font-bold text-center uppercase bg-blue-500 rounded shadow sha">
       <section className="flex gap-4 p-5">
         <div className="w-1/2">
-          <div className="flex flex-col items-start justify-start">
+          <div className="flex flex-col justify-start items-start">
             <label htmlFor="liName">Liability:</label>
             <h3 className="ml-1" id="liName">
               {liability.title}
@@ -36,11 +38,14 @@ const Liability = ({ liability }) => {
               <h4>{exp.title}</h4>
               <p>{exp.amount}</p>
               <RedButton
-                onClick={() =>
+                onClick={() => {
                   dispatch(
                     removeLiabilityExpense({ id1: exp.id, id2: liability.id })
-                  )
-                }
+                  );
+                  dispatch(
+                    deleteExpeseData(liability.id,exp.id)
+                  );
+                }}
               >
                 delete
               </RedButton>
@@ -48,7 +53,7 @@ const Liability = ({ liability }) => {
           ))}
         </div>
       </section>
-      <div className="absolute top-0 flex items-center justify-center gap-1 right-3">
+      <div className="flex absolute top-0 right-3 gap-1 justify-center items-center">
         <Button
           onClick={() => {
             dispatch(toggleEdit());
@@ -60,7 +65,12 @@ const Liability = ({ liability }) => {
         >
           edit
         </Button>
-        <RedButton onClick={() => dispatch(deleteLiability(liability.id))}>
+        <RedButton
+          onClick={() => {
+            dispatch(deleteLiability(liability.id));
+            dispatch(deleteData(liability.id));
+          }}
+        >
           x
         </RedButton>
       </div>

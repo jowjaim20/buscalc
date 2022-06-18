@@ -6,6 +6,7 @@ const initialState = {
     title: "",
     amount: 0,
     expenses: [],
+  
   },
 };
 

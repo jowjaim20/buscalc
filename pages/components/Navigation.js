@@ -2,9 +2,13 @@ import Link from "next/link";
 
 const Navigation = () => {
   return (
-    <nav className=" p-3 text-lg font-bold uppercase w-full bg-blue-500 text-center">
+    <nav className="p-3 w-full text-lg font-bold text-center uppercase bg-blue-500">
       <ul className="flex gap-1 text-xs">
-        <li>home</li>
+        <li>
+          <Link href="/">
+            <a>Home</a>
+          </Link>
+        </li>
         <li>credits</li>
         <li>expenses</li>
         <li>assets</li>
