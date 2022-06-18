@@ -41,11 +41,24 @@ export const deleteData = createAsyncThunk(
     }
   }
 );
-export const deleteExpeseData = createAsyncThunk(
+export const deleteExpenseData = createAsyncThunk(
   "liabilities/deleteExpenseData",
-  async (id, id2) => {
+  async ({ id, data }) => {
     try {
-      const response = await axios.delete(LIABILITIES_URL + `/${id}/${id2}`);
+      const response = await axios.patch(LIABILITIES_URL + `/${id}`, {
+        expenses: data,
+      });
+      return response.data;
+    } catch (error) {
+      throw Error(error.message);
+    }
+  }
+);
+export const updateLiability = createAsyncThunk(
+  "liabilities/updateLiability",
+  async ({ id, data }) => {
+    try {
+      const response = await axios.put(LIABILITIES_URL + `/${id}`,data);
       return response.data;
     } catch (error) {
       throw Error(error.message);
@@ -91,7 +104,7 @@ const liabilitiesSlice = createSlice({
         (liability) => liability.id === payload.id
       );
 
-      state.liabilities[index] = payload.liabilities;
+      state.liabilities[index] = payload;
     },
   },
   extraReducers(builder) {
@@ -116,7 +129,10 @@ const liabilitiesSlice = createSlice({
         state.error = `${action.error.message} ${action.type}`;
         state.status = "failed";
       })
-      .addCase(deleteExpeseData.fulfilled, (state, action) => {
+      .addCase(deleteExpenseData.fulfilled, (state, action) => {
+        state.status = "succeed";
+      })
+      .addCase(updateLiability.fulfilled, (state, action) => {
         state.status = "succeed";
       });
   },

@@ -11,7 +11,7 @@ import {
   deleteLiability,
   toggleEdit,
   deleteData,
-  deleteExpeseData,
+  deleteExpenseData,
 } from "../features/liabilities/liabilitiesSlice";
 import Button, { RedButton } from "./Button";
 
@@ -37,18 +37,6 @@ const Liability = ({ liability }) => {
             <div className="flex gap-2" key={exp.id}>
               <h4>{exp.title}</h4>
               <p>{exp.amount}</p>
-              <RedButton
-                onClick={() => {
-                  dispatch(
-                    removeLiabilityExpense({ id1: exp.id, id2: liability.id })
-                  );
-                  dispatch(
-                    deleteExpeseData(liability.id,exp.id)
-                  );
-                }}
-              >
-                delete
-              </RedButton>
             </div>
           ))}
         </div>

@@ -2,7 +2,10 @@ import React from "react";
 import { useSelector, useDispatch } from "react-redux";
 
 import {
+  addExpenseData,
+  deleteExpenseData,
   toggleEdit,
+  updateLiability,
   UpdateLiability,
 } from "../features/liabilities/liabilitiesSlice";
 import {
@@ -26,17 +29,17 @@ const ForEditModal = () => {
   const dispatch = useDispatch();
 
   return (
-    <div className="flex items-center justify-center w-full ">
+    <div className="flex justify-center items-center w-full">
       <div
         className="absolute w-full h-screen bg-opacity-25 bg-slate-900 -10"
         onClick={() => dispatch(toggleEdit())}
       ></div>
-      <div className="absolute z-30 flex items-center justify-center w-4/6 inset-y-64">
-        <div className="shadow-md shadow-slate-900 ">
-          <article className="w-full p-3 text-lg font-bold text-center uppercase bg-green-500">
+      <div className="flex absolute inset-y-64 z-30 justify-center items-center w-4/6">
+        <div className="shadow-md shadow-slate-900">
+          <article className="p-3 w-full text-lg font-bold text-center uppercase bg-green-500">
             <section className="flex gap-4">
               <div className="w-1/2">
-                <div className="flex flex-col items-start justify-start">
+                <div className="flex flex-col justify-start items-start">
                   <p>amount:{forEditLiability.amount}</p>
                 </div>
               </div>
@@ -60,11 +63,11 @@ const ForEditModal = () => {
             </section>
           </article>
           <section>
-            <div className="flex items-center justify-center w-full p-3 text-lg font-bold text-center uppercase bg-green-300">
+            <div className="flex justify-center items-center p-3 w-full text-lg font-bold text-center uppercase bg-green-300">
               <div>
                 <label htmlFor="title">Title</label>
                 <input
-                  className="w-full border rounded border-slate-600"
+                  className="w-full rounded border border-slate-600"
                   id="title"
                   value={forEditLiability.title}
                   onChange={(e) =>
@@ -75,7 +78,7 @@ const ForEditModal = () => {
             </div>
 
             <form
-              className="flex flex-col items-center justify-center w-full gap-4 p-3 text-lg font-bold text-center uppercase bg-green-800"
+              className="flex flex-col gap-4 justify-center items-center p-3 w-full text-lg font-bold text-center uppercase bg-green-800"
               onSubmit={(e) => {
                 e.preventDefault();
                 dispatch(forEditPushLiabilityExpense(expense));
@@ -89,7 +92,7 @@ const ForEditModal = () => {
                     Expense Name
                   </label>
                   <input
-                    className="w-full border rounded border-slate-600"
+                    className="w-full rounded border border-slate-600"
                     id="extitle"
                     value={expense.title}
                     onChange={(e) => dispatch(addExpenseTitle(e.target.value))}
@@ -101,7 +104,7 @@ const ForEditModal = () => {
                     Amount
                   </label>
                   <input
-                    className="w-full border rounded border-slate-600"
+                    className="w-full rounded border border-slate-600"
                     id="examount"
                     value={expense.amount}
                     onChange={(e) =>
@@ -116,6 +119,12 @@ const ForEditModal = () => {
               <Button
                 onClick={() => {
                   dispatch(UpdateLiability(forEditLiability));
+                  dispatch(
+                    updateLiability({
+                      id: forEditLiability.id,
+                      data: forEditLiability,
+                    })
+                  );
                   dispatch(forEditClearLiability());
                   dispatch(toggleEdit());
                 }}
