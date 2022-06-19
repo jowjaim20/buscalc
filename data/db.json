@@ -1,3 +1,16 @@
 {
-  "liabilities": []
+  "liabilities": [
+    {
+      "id": 499,
+      "title": "Joel",
+      "amount": 3322,
+      "expenses": [
+        {
+          "id": 7051,
+          "title": "food",
+          "amount": 3322
+        }
+      ]
+    }
+  ]
 }

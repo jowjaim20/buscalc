@@ -6,13 +6,10 @@ import {
   forEditUpdateAmount,
 } from "../features/liabilities/forEditLiabilitySlice";
 
-
 import {
-  removeLiabilityExpense,
   deleteLiability,
   toggleEdit,
   deleteData,
-  deleteExpenseData,
 } from "../features/liabilities/liabilitiesSlice";
 import Button, { RedButton } from "./Button";
 
@@ -23,7 +20,7 @@ const Liability = ({ liability }) => {
     <article className="relative p-3 text-lg font-bold text-center uppercase bg-blue-500 rounded shadow sha">
       <section className="flex gap-4 p-5">
         <div className="w-1/2">
-          <div className="flex flex-col justify-start items-start">
+          <div className="flex flex-col items-start justify-start">
             <label htmlFor="liName">Liability:</label>
             <h3 className="ml-1" id="liName">
               {liability.title}
@@ -42,7 +39,7 @@ const Liability = ({ liability }) => {
           ))}
         </div>
       </section>
-      <div className="flex absolute top-0 right-3 gap-1 justify-center items-center">
+      <div className="absolute top-0 flex items-center justify-center gap-1 right-3">
         <Button
           onClick={() => {
             dispatch(toggleEdit());
