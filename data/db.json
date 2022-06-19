@@ -1,14 +1,55 @@
 {
   "liabilities": [
     {
-      "id": 499,
-      "title": "Joel",
-      "amount": 3322,
+      "id": 530,
+      "title": "Motorcycle",
+      "amount": 2000,
       "expenses": [
         {
-          "id": 7051,
-          "title": "food",
-          "amount": 3322
+          "id": 3012,
+          "title": "Gas",
+          "amount": 1500
+        },
+        {
+          "id": 1918,
+          "title": "repair",
+          "amount": 500
+        }
+      ]
+    },
+    {
+      "id": 17,
+      "title": "Home",
+      "amount": 3500,
+      "expenses": [
+        {
+          "id": 3896,
+          "title": "Food",
+          "amount": 2000
+        },
+        {
+          "id": 9000,
+          "title": "Electricity",
+          "amount": 1000
+        },
+        {
+          "id": 7721,
+          "title": "Internet",
+          "amount": 500
+        }
+      ]
+    }
+  ],
+  "assets": [
+    {
+      "id": 123,
+      "amount": 23000,
+      "title": "work",
+      "expenses": [
+        {
+          "id": 1234,
+          "title": "laptop",
+          "amount": 23000
         }
       ]
     }

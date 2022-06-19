@@ -1,22 +1,13 @@
 import Link from "next/link";
+import { ListLinkWrapper } from "./wrappers/wrappers";
 
 const Navigation = () => {
   return (
     <nav className="p-3 w-full text-lg font-bold text-center uppercase bg-blue-500">
       <ul className="flex gap-1 text-xs">
-        <li>
-          <Link href="/">
-            <a>Home</a>
-          </Link>
-        </li>
-        <li>credits</li>
-        <li>expenses</li>
-        <li>assets</li>
-        <li>
-          <Link href="/liabilities">
-            <a>liabilities</a>
-          </Link>
-        </li>
+        <ListLinkWrapper href="/">Home</ListLinkWrapper>
+        <ListLinkWrapper href="/assets">Assets</ListLinkWrapper>
+        <ListLinkWrapper href="/liabilities">Liabilities</ListLinkWrapper>
       </ul>
     </nav>
   );
