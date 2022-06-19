@@ -16,11 +16,7 @@ const Liabilities = () => {
   const dataStatus = useSelector(getDataStatus);
   const error = useSelector(getDataError);
 
-  useEffect(() => {
-    if (dataStatus === "idle") {
-      dispatch(fetchData());
-    }
-  }, [dataStatus, dispatch]);
+
 
   return (
     <div className="flex relative flex-col justify-start h-screen text-center">

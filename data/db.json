@@ -1,21 +1,3 @@
 {
-  "liabilities": [
-    {
-      "id": 635,
-      "title": "Hool",
-      "amount": 10584,
-      "expenses": [
-        {
-          "id": 7278,
-          "title": "Eyeyey",
-          "amount": 5252
-        },
-        {
-          "id": 9935,
-          "title": "Herg",
-          "amount": 5332
-        }
-      ]
-    }
-  ]
+  "liabilities": []
 }

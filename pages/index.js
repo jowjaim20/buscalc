@@ -1,13 +1,22 @@
-import Navigation from "./components/Navigation";
-import Header from "./components/Header";
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import Liability from "./components/Liability";
+import { fetchData } from "./features/liabilities/liabilitiesSlice";
 
 export default function Home() {
+  const { liabilities, status } = useSelector((state) => state.liabilities);
+  const dispatch = useDispatch();
+
   return (
     <div className="flex flex-col justify-start h-screen text-center">
-      
-      <main className="mb-auto text-rose-500 uppercase shadow-md">This is amazing!</main>
-      
+      <div className="w-1/2 self-center bg-slate-200">
+        <h2>Liabilities</h2>
+        <div>
+          {liabilities.map((liability) => (
+            <Liability key={liability.id} liability={liability} />
+          ))}
+        </div>
+      </div>
     </div>
   );
 }
-''

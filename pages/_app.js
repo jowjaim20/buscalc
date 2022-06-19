@@ -2,6 +2,10 @@ import "../styles/globals.css";
 import { store } from "./store";
 import { Provider } from "react-redux";
 import Layout from "./components/Layout";
+import { fetchData } from "./features/liabilities/liabilitiesSlice";
+
+
+store.dispatch(fetchData());
 
 function MyApp({ Component, pageProps }) {
   return (
