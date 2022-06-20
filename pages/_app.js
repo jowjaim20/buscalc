@@ -4,7 +4,7 @@ import { Provider } from "react-redux";
 import Layout from "./components/Layout";
 import { fetchData } from "./features/liabilities/liabilitiesSlice";
 import { useEffect } from "react";
-import { fetchAssets } from "./features/liabilities/assets/assetsSlice";
+import { fetchAssets } from "./features/assets/assetsSlice";
 
 function MyApp({ Component, pageProps }) {
   useEffect(() => {

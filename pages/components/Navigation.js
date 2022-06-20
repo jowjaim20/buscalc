@@ -3,7 +3,7 @@ import { ListLinkWrapper } from "./wrappers/wrappers";
 
 const Navigation = () => {
   return (
-    <nav className="p-3 w-full text-lg font-bold text-center uppercase bg-blue-500">
+    <nav className="self-end w-full p-3 text-lg font-bold text-center uppercase bg-blue-500 ">
       <ul className="flex gap-1 text-xs">
         <ListLinkWrapper href="/">Home</ListLinkWrapper>
         <ListLinkWrapper href="/assets">Assets</ListLinkWrapper>

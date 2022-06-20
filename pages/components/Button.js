@@ -1,4 +1,7 @@
+import Link from "next/link";
 import React from "react";
+import { useDispatch } from "react-redux";
+import { tooggleAdd } from "../features/liabilities/liabilitiesSlice";
 
 const Button = ({ children, type = "button", onClick }) => {
   return (
@@ -9,6 +12,20 @@ const Button = ({ children, type = "button", onClick }) => {
     >
       {children}
     </button>
+  );
+};
+const ButtonLink = ({ children, href = "/" }) => {
+  const dispatch = useDispatch();
+  return (
+    <Link href={href}>
+      <button
+        onClick={() => dispatch(tooggleAdd())}
+        type="button"
+        className="px-4 py-1 text-white bg-green-500 rounded-md shadow-md"
+      >
+        <a>{children}</a>
+      </button>
+    </Link>
   );
 };
 const RedButton = ({ children, type = "button", onClick }) => {
@@ -22,6 +39,6 @@ const RedButton = ({ children, type = "button", onClick }) => {
     </button>
   );
 };
-export { RedButton };
+export { RedButton, ButtonLink };
 
 export default Button;

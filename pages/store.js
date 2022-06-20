@@ -3,7 +3,7 @@ import liabilitiesReducer from "./features/liabilities/liabilitiesSlice";
 import liabilityReducer from "./features/liabilities/liabilitySlice";
 import expenseReducer from "./features/liabilities/expenseSlice";
 import forEditLiabilityReducer from "./features/liabilities/forEditLiabilitySlice";
-import assetsReducer from "./features/liabilities/assets/assetsSlice";
+import assetsReducer from "./features/assets/assetsSlice";
 
 export const store = configureStore({
   reducer: {
