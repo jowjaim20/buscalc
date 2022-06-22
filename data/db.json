@@ -40,5 +40,35 @@
       ]
     }
   ],
-  "assets": []
+  "assets": [
+    {
+      "id": 942,
+      "title": "home",
+      "amount": 2828,
+      "expenses": [
+        {
+          "id": 2355,
+          "title": "water",
+          "amount": 2828
+        }
+      ]
+    },
+    {
+      "id": 193,
+      "title": "joel jaim",
+      "amount": 46464,
+      "expenses": [
+        {
+          "id": 946,
+          "title": "hooooo",
+          "amount": 23232
+        },
+        {
+          "id": 9078,
+          "title": "water",
+          "amount": 23232
+        }
+      ]
+    }
+  ]
 }
