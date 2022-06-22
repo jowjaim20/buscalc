@@ -4,16 +4,16 @@ import {
   forEditAddLiabilityId,
   forEditAddLiabilityTitle,
   forEditUpdateAmount,
-} from "../features/liabilities/forEditLiabilitySlice";
+} from "../features/assets/forEditSingleAssetSlice";
 
 import {
-  deleteLiability,
+  deleteSingleAsset,
   toggleEdit,
   deleteData,
-} from "../features/liabilities/liabilitiesSlice";
+} from "../features/assets/assetsSlice";
 import Button, { RedButton } from "./Button";
 
-const Liability = ({ liability }) => {
+const Asset = ({ asset }) => {
   const dispatch = useDispatch();
 
   return (
@@ -21,17 +21,17 @@ const Liability = ({ liability }) => {
       <section className="flex gap-4 ">
         <div className="w-1/2">
           <div className="flex flex-col items-start justify-start">
-            <label htmlFor="liName">Liability:</label>
+            <label htmlFor="liName">Asset:</label>
             <h3 className="ml-1" id="liName">
-              {liability.title}
+              {asset.title}
             </h3>
 
-            <p>amount:{liability.amount}</p>
+            <p>amount:{asset.amount}</p>
           </div>
         </div>
         <div className="flex flex-col">
           <h3>expenses</h3>
-          {liability.expenses.map((exp) => (
+          {asset.expenses.map((exp) => (
             <div className="flex gap-2" key={exp.id}>
               <h4>{exp.title}</h4>
               <p>{exp.amount}</p>
@@ -43,9 +43,9 @@ const Liability = ({ liability }) => {
         <Button
           onClick={() => {
             dispatch(toggleEdit());
-            dispatch(forEditAddLiabilityExpense(liability.expenses));
-            dispatch(forEditAddLiabilityTitle(liability.title));
-            dispatch(forEditAddLiabilityId(liability.id));
+            dispatch(forEditAddLiabilityExpense(asset.expenses));
+            dispatch(forEditAddLiabilityTitle(asset.title));
+            dispatch(forEditAddLiabilityId(asset.id));
             dispatch(forEditUpdateAmount());
           }}
         >
@@ -53,8 +53,8 @@ const Liability = ({ liability }) => {
         </Button>
         <RedButton
           onClick={() => {
-            dispatch(deleteLiability(liability.id));
-            dispatch(deleteData(liability.id));
+            dispatch(deleteSingleAsset(asset.id));
+            dispatch(deleteData(asset.id));
           }}
         >
           x
@@ -64,4 +64,4 @@ const Liability = ({ liability }) => {
   );
 };
 
-export default Liability;
+export default Asset;

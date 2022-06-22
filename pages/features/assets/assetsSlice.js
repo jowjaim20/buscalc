@@ -70,7 +70,7 @@ const assetsSlice = createSlice({
     toggleEdit: (state) => {
       state.edit = !state.edit;
     },
-    tooggleAdd: (state) => {
+    toggleAddAsset: (state) => {
       state.add = !state.add;
     },
     addSingleAsset: (state, { payload }) => {
@@ -97,7 +97,7 @@ const assetsSlice = createSlice({
         0
       );
     },
-    UpdateSingleAsset: (state, { payload }) => {
+    updateSingleAsset: (state, { payload }) => {
       const index = state.assets.findIndex(
         (singleAsset) => singleAsset.id === payload.id
       );
@@ -135,16 +135,16 @@ const assetsSlice = createSlice({
       });
   },
 });
-
+export const getDataStatus = (state) => state.assets.status;
 export const getAssets = (state) => state.assets.assets;
 export const getDataError = (state) => state.assets.error;
 
 export const {
-  UpdateLiability,
+  updateSingleAsset,
   toggleEdit,
-  tooggleAdd,
+  toggleAddAsset,
   addSingleAsset,
-  deleteLiability,
+  deleteSingleAsset,
   removeLiabilityExpense,
 } = assetsSlice.actions;
 export default assetsSlice.reducer;

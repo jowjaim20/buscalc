@@ -3,15 +3,17 @@ import Button, { ButtonLink } from "./components/Button";
 import HomePageAsset from "./components/HomePageAsset";
 import HomePageLiability from "./components/HomePageLiability";
 import { CardWrapper } from "./components/wrappers/wrappers";
-import { getAssets } from "./features/assets/assetsSlice";
+import { getAssets, toggleAddAsset } from "./features/assets/assetsSlice";
+import { tooggleAdd } from "./features/liabilities/liabilitiesSlice";
+
 
 export default function Home() {
   const { liabilities } = useSelector((state) => state.liabilities);
   const assets = useSelector(getAssets);
   return (
-    <div className="flex flex-col justify-start mb-auto text-center">
+    <main className="flex flex-col justify-start mb-auto text-center">
       <CardWrapper>
-        <h2 className="mb-2 font-semibold uppercase">Liabilities</h2>
+        <h2 className="mb-2 font-semibold uppercase text-white">Liabilities</h2>
         {liabilities.length > 0 ? (
           <section>
             {liabilities.map((liability) => (
@@ -19,22 +21,24 @@ export default function Home() {
             ))}
           </section>
         ) : (
-          <ButtonLink href="/liabilities">Add</ButtonLink>
+          <ButtonLink href="/liabilities" toggle={tooggleAdd}>Add</ButtonLink>
         )}
       </CardWrapper>
       <CardWrapper>
-        <h2 className="mb-2 font-semibold uppercase">Assets</h2>
+        <h2 className="mb-2 font-semibold uppercase text-white">Assets</h2>
 
         {assets.length > 0 ? (
           <section>
             {assets.map((singleAsset) => (
               <HomePageAsset key={singleAsset.id} asset={singleAsset} />
             ))}
+
+            
           </section>
         ) : (
-          <ButtonLink href="/assets">Add</ButtonLink>
+          <ButtonLink href="/assets" toggle={toggleAddAsset}>Add</ButtonLink>
         )}
       </CardWrapper>
-    </div>
+    </main>
   );
 }

@@ -40,18 +40,5 @@
       ]
     }
   ],
-  "assets": [
-    {
-      "id": 123,
-      "amount": 23000,
-      "title": "work",
-      "expenses": [
-        {
-          "id": 1234,
-          "title": "laptop",
-          "amount": 23000
-        }
-      ]
-    }
-  ]
+  "assets": []
 }

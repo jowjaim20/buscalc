@@ -12,8 +12,8 @@ export const ListLinkWrapper = ({ children, href = "/" }) => {
 };
 export const HomepageCardWrapper = ({ data }) => {
   return (
-    <div>
-      <section className="flex">
+    <div className=" ml-3">
+      <section className="flex text-white">
         <h3 className="mr-1">{data.title}:</h3>
         <p>{data.amount}</p>
       </section>
@@ -23,7 +23,7 @@ export const HomepageCardWrapper = ({ data }) => {
 
 export const CardWrapper = ({ children }) => {
   return (
-    <div className="flex flex-col self-end w-1/2 p-1 m-1 rounded-md shadow-md bg-slate-200">
+    <div className="card p-2">
       {children}
     </div>
   );
