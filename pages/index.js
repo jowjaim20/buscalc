@@ -5,11 +5,12 @@ import HomePageLiability from "./components/HomePageLiability";
 import { CardWrapper } from "./components/wrappers/wrappers";
 import { getAssets, toggleAddAsset } from "./features/assets/assetsSlice";
 import { tooggleAdd } from "./features/liabilities/liabilitiesSlice";
-window.addEventListener("resize", () => {
+const resize = () => {
   // We execute the same script as before
   let vh = window.innerHeight * 0.01;
   document.documentElement.style.setProperty("--vh", `${vh}px`);
-});
+};
+resize();
 
 export default function Home() {
   const { liabilities } = useSelector((state) => state.liabilities);
