@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import Button, { ButtonLink } from "./components/Button";
 import HomePageAsset from "./components/HomePageAsset";
@@ -5,16 +6,26 @@ import HomePageLiability from "./components/HomePageLiability";
 import { CardWrapper } from "./components/wrappers/wrappers";
 import { getAssets, toggleAddAsset } from "./features/assets/assetsSlice";
 import { tooggleAdd } from "./features/liabilities/liabilitiesSlice";
-const resize = () => {
-  // We execute the same script as before
-  let vh = window.innerHeight * 0.01;
-  document.documentElement.style.setProperty("--vh", `${vh}px`);
-};
-resize();
 
 export default function Home() {
   const { liabilities } = useSelector((state) => state.liabilities);
   const assets = useSelector(getAssets);
+
+  useEffect(() => {
+    window.addEventListener("resize", () => {
+      // We execute the same script as before
+      let vh = window.innerHeight * 0.01;
+      document.documentElement.style.setProperty("--vh", `${vh}px`);
+    });
+    return () => {
+      window.removeEventListener("resize", () => {
+        // We execute the same script as before
+        let vh = window.innerHeight * 0.01;
+        document.documentElement.style.setProperty("--vh", `${vh}px`);
+      });
+    };
+  }, []);
+
   return (
     <main className="flex flex-col justify-start mb-auto text-center">
       <CardWrapper>
