@@ -11,21 +11,6 @@ export default function Home() {
   const { liabilities } = useSelector((state) => state.liabilities);
   const assets = useSelector(getAssets);
 
-  useEffect(() => {
-    window.addEventListener("resize", () => {
-      // We execute the same script as before
-      let vh = window.innerHeight * 0.01;
-      document.documentElement.style.setProperty("--vh", `${vh}px`);
-    });
-    return () => {
-      window.removeEventListener("resize", () => {
-        // We execute the same script as before
-        let vh = window.innerHeight * 0.01;
-        document.documentElement.style.setProperty("--vh", `${vh}px`);
-      });
-    };
-  }, []);
-
   return (
     <main className="flex flex-col justify-start mb-auto text-center">
       <CardWrapper>
