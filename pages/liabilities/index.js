@@ -15,11 +15,10 @@ const Liabilities = () => {
   const { liabilities, edit, add } = useSelector((state) => state.liabilities);
   const dataStatus = useSelector(getDataStatus);
   const error = useSelector(getDataError);
-
-
+  console.log("reload");
 
   return (
-    <div className="flex relative flex-col justify-start h-screen text-center">
+    <div className="relative flex flex-col justify-start h-screen text-center">
       <button
         onClick={() => dispatch(tooggleAdd())}
         type="button"
@@ -38,10 +37,12 @@ const Liabilities = () => {
           <br></br>Please reload the app
         </div>
       )}
-      {dataStatus === 'succeed' && liabilities.length < 1 && <div>No post to show</div>}
+      {dataStatus === "succeed" && liabilities.length < 1 && (
+        <div>No post to show</div>
+      )}
       <div className="flex flex-col gap-5">
         {liabilities.map((liability) => (
-          <Liability key={liability.id} liability={liability} />
+          <Liability key={liability.title} liability={liability} />
         ))}
       </div>
     </div>

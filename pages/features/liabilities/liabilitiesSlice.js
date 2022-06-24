@@ -1,7 +1,31 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { initializeApp } from "firebase/app";
+import {
+  addDoc,
+  collection,
+  deleteDoc,
+  doc,
+  getDocs,
+  getFirestore,
+  updateDoc,
+} from "firebase/firestore";
 import axios from "axios";
 
 const LIABILITIES_URL = "http://localhost:3500/liabilities";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyClcHkLVrePvXQZYFJ8Of2eFJu-psIrvL0",
+  authDomain: "business-calc-a0e33.firebaseapp.com",
+  projectId: "business-calc-a0e33",
+  storageBucket: "business-calc-a0e33.appspot.com",
+  messagingSenderId: "382871063159",
+  appId: "1:382871063159:web:341d4252df6a705f1c5472",
+};
+
+initializeApp(firebaseConfig);
+const db = getFirestore();
+
+const colRef = collection(db, "liabilities");
 
 const initialState = {
   liabilities: [],
@@ -12,8 +36,15 @@ const initialState = {
 };
 export const fetchData = createAsyncThunk("liabilities/fetchData", async () => {
   try {
-    const response = await axios.get(LIABILITIES_URL);
-    return response.data;
+    // const response = await axios.get(LIABILITIES_URL);
+    // return response.data;
+    const data = await getDocs(colRef).then((snapshot) =>
+      snapshot.docs.map((doc) => {
+        return { ...doc.data(), id: doc.id };
+      })
+    );
+    console.log(data);
+    return data;
   } catch (error) {
     throw Error(error.message);
   }
@@ -23,19 +54,28 @@ export const addData = createAsyncThunk(
   "liabilities/addData",
   async (liability) => {
     try {
-      const response = await axios.post(LIABILITIES_URL, liability);
-      return response.data;
+      // const response = await axios.post(LIABILITIES_URL, liability);
+      // return response.data;
+      const data = await addDoc(colRef, liability).then((ba) => ba.id);
+
+      return data;
     } catch (error) {
       throw Error(error.message);
     }
   }
 );
+
 export const deleteData = createAsyncThunk(
   "liabilities/deleteData",
   async (id) => {
     try {
-      const response = await axios.delete(LIABILITIES_URL + `/${id}`);
-      return response.data;
+      // const response = await axios.delete(LIABILITIES_URL + `/${id}`);
+      // return response.data;
+
+      const docRef = doc(db, "liabilities", id);
+
+      const data = await deleteDoc(docRef);
+      return data;
     } catch (error) {
       throw Error(error.message);
     }
@@ -45,21 +85,33 @@ export const deleteExpenseData = createAsyncThunk(
   "liabilities/deleteExpenseData",
   async ({ id, data }) => {
     try {
-      const response = await axios.patch(LIABILITIES_URL + `/${id}`, {
+      // const response = await axios.patch(LIABILITIES_URL + `/${id}`, {
+      //   expenses: data,
+      // });
+      // return response.data;
+
+      const docRef = doc(db, "liabilities", id);
+
+      const response = await updateDoc(docRef, {
         expenses: data,
       });
-      return response.data;
+      return response;
     } catch (error) {
       throw Error(error.message);
     }
   }
 );
+
 export const updateLiability = createAsyncThunk(
   "liabilities/updateLiability",
   async ({ id, data }) => {
     try {
-      const response = await axios.put(LIABILITIES_URL + `/${id}`,data);
-      return response.data;
+      // const response = await axios.put(LIABILITIES_URL + `/${id}`, data);
+      // return response.data;
+      const docRef = doc(db, "liabilities", id);
+
+      const response = await updateDoc(docRef, data);
+      return response;
     } catch (error) {
       throw Error(error.message);
     }
@@ -123,6 +175,7 @@ const liabilitiesSlice = createSlice({
         state.error = `${action.error.message} ${action.type}`;
       })
       .addCase(addData.fulfilled, (state, action) => {
+        state.liabilities[state.liabilities.length - 1].id = action.payload;
         console.log(action.payload);
       })
       .addCase(addData.rejected, (state, action) => {
@@ -134,6 +187,12 @@ const liabilitiesSlice = createSlice({
       })
       .addCase(updateLiability.fulfilled, (state, action) => {
         state.status = "succeed";
+      })
+      .addCase(deleteData.fulfilled, (state, action) => {
+        state.status = "succeed";
+      })
+      .addCase(deleteData.rejected, (state, action) => {
+        state.status = "failed";
       });
   },
 });
