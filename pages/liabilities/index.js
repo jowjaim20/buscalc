@@ -4,7 +4,6 @@ import ForEditModal from "../components/ForEditModal";
 import Liability from "../components/Liability";
 import Modal from "../components/Modal";
 import {
-  fetchData,
   getDataError,
   getDataStatus,
   tooggleAdd,
@@ -15,7 +14,6 @@ const Liabilities = () => {
   const { liabilities, edit, add } = useSelector((state) => state.liabilities);
   const dataStatus = useSelector(getDataStatus);
   const error = useSelector(getDataError);
-  console.log("reload");
 
   return (
     <div className="relative flex flex-col justify-start h-screen text-center">

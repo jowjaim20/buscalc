@@ -23,6 +23,7 @@ import Button, { RedButton } from "./Button";
 const ForEditModal = () => {
   const { forEditLiability } = useSelector((state) => state.forEditLiability);
   const { expense } = useSelector((state) => state.expense);
+  const { user } = useSelector((state) => state.liabilities);
 
   const dispatch = useDispatch();
 
@@ -121,6 +122,7 @@ const ForEditModal = () => {
                     updateLiability({
                       id: forEditLiability.id,
                       data: forEditLiability,
+                      userId: user,
                     })
                   );
                   dispatch(forEditClearLiability());

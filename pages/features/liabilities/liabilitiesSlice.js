@@ -3,13 +3,19 @@ import { initializeApp } from "firebase/app";
 import {
   addDoc,
   collection,
+  collectionGroup,
   deleteDoc,
   doc,
+  getDoc,
   getDocs,
   getFirestore,
+  setDoc,
   updateDoc,
 } from "firebase/firestore";
+
 import axios from "axios";
+import { data } from "autoprefixer";
+import { Result, stringify } from "postcss";
 
 const LIABILITIES_URL = "http://localhost:3500/liabilities";
 
@@ -25,38 +31,47 @@ const firebaseConfig = {
 initializeApp(firebaseConfig);
 const db = getFirestore();
 
-const colRef = collection(db, "liabilities");
-
 const initialState = {
   liabilities: [],
   status: "idle",
   error: null,
   add: false,
   edit: false,
+  user: null,
+  signIn: false,
 };
-export const fetchData = createAsyncThunk("liabilities/fetchData", async () => {
-  try {
-    // const response = await axios.get(LIABILITIES_URL);
-    // return response.data;
-    const data = await getDocs(colRef).then((snapshot) =>
-      snapshot.docs.map((doc) => {
-        return { ...doc.data(), id: doc.id };
-      })
-    );
-    console.log(data);
-    return data;
-  } catch (error) {
-    throw Error(error.message);
+export const fetchData = createAsyncThunk(
+  "liabilities/fetchData",
+  async (id) => {
+    try {
+      const colRefLiabilities = collection(db, `users/${id}/liabilities`);
+
+      let data = await getDocs(colRefLiabilities).then((snapshot) => {
+        const data = [];
+        snapshot.docs.forEach(async (doc) => {
+          data.push({
+            ...doc.data(),
+            id: doc.id,
+          });
+        });
+        return data;
+      });
+
+      return data;
+    } catch (error) {
+      throw Error(error.message);
+    }
   }
-});
+);
 
 export const addData = createAsyncThunk(
   "liabilities/addData",
-  async (liability) => {
+  async ({ liability, id, userId }) => {
     try {
       // const response = await axios.post(LIABILITIES_URL, liability);
       // return response.data;
-      const data = await addDoc(colRef, liability).then((ba) => ba.id);
+
+      setDoc(doc(db, `users/${userId}/liabilities`, id.toString()), liability);
 
       return data;
     } catch (error) {
@@ -67,12 +82,12 @@ export const addData = createAsyncThunk(
 
 export const deleteData = createAsyncThunk(
   "liabilities/deleteData",
-  async (id) => {
+  async ({ userId, id }) => {
     try {
       // const response = await axios.delete(LIABILITIES_URL + `/${id}`);
       // return response.data;
 
-      const docRef = doc(db, "liabilities", id);
+      const docRef = doc(db, `users/${userId}/liabilities`, id);
 
       const data = await deleteDoc(docRef);
       return data;
@@ -104,11 +119,11 @@ export const deleteExpenseData = createAsyncThunk(
 
 export const updateLiability = createAsyncThunk(
   "liabilities/updateLiability",
-  async ({ id, data }) => {
+  async ({ userId, id, data }) => {
     try {
       // const response = await axios.put(LIABILITIES_URL + `/${id}`, data);
       // return response.data;
-      const docRef = doc(db, "liabilities", id);
+      const docRef = doc(db, `users/${userId}/liabilities`, id);
 
       const response = await updateDoc(docRef, data);
       return response;
@@ -122,6 +137,12 @@ const liabilitiesSlice = createSlice({
   name: "liabilities",
   initialState,
   reducers: {
+    setSignIn: (state, { payload }) => {
+      state.signIn = payload;
+    },
+    setUser: (state, { payload }) => {
+      state.user = payload;
+    },
     toggleEdit: (state) => {
       state.edit = !state.edit;
     },
@@ -166,8 +187,17 @@ const liabilitiesSlice = createSlice({
       })
       .addCase(fetchData.fulfilled, (state, action) => {
         state.status = "succeed";
-        console.log(action);
+
         state.liabilities = action.payload;
+
+        // data.map((exp) => {
+        //   console.log(exp);
+        //   const index = state.liabilities.findIndex(
+        //     (liability) => liability.id === exp.id
+        //   );
+
+        //   state.liabilities[index].expenses.push(exp.data);
+        // });
       })
       .addCase(fetchData.rejected, (state, action) => {
         state.status = "failed";
@@ -201,11 +231,13 @@ export const getDataStatus = (state) => state.liabilities.status;
 export const getDataError = (state) => state.liabilities.error;
 
 export const {
+  setUser,
   UpdateLiability,
   toggleEdit,
   tooggleAdd,
   addLiability,
   deleteLiability,
   removeLiabilityExpense,
+  setSignIn,
 } = liabilitiesSlice.actions;
 export default liabilitiesSlice.reducer;

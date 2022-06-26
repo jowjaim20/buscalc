@@ -5,6 +5,7 @@ const initialState = {
     title: "",
     amount: 0,
     expenses: [],
+    id: "",
   },
 };
 
@@ -14,7 +15,7 @@ const liabilitySlice = createSlice({
   reducers: {
     addLiabilityTitle: (state, { payload }) => {
       state.liability.title = payload;
-      // state.liability.id = Math.floor(Math.random() * 1000);
+      state.liability.id = Math.floor(Math.random() * 1000);
     },
 
     addLiabilityExpense: (state, { payload }) => {

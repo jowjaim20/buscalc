@@ -7,10 +7,6 @@ import { useEffect } from "react";
 import { fetchAssets } from "./features/assets/assetsSlice";
 
 function MyApp({ Component, pageProps }) {
-  useEffect(() => {
-    store.dispatch(fetchData());
-    store.dispatch(fetchAssets());
-  }, []);
   return (
     <Provider store={store}>
       <Layout>

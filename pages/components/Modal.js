@@ -20,6 +20,7 @@ import {
 import Button, { RedButton } from "./Button";
 
 const Modal = () => {
+  const { user } = useSelector((state) => state.liabilities);
   const { liability } = useSelector((state) => state.liability);
   const { expense } = useSelector((state) => state.expense);
 
@@ -113,7 +114,13 @@ const Modal = () => {
               <Button
                 onClick={() => {
                   dispatch(addLiability(liability));
-                  dispatch(addData(liability));
+                  dispatch(
+                    addData({
+                      liability: liability,
+                      id: liability.id,
+                      userId: user,
+                    })
+                  );
                   dispatch(clearLiability(liability));
                   dispatch(tooggleAdd());
                 }}

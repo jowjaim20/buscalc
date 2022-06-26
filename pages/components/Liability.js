@@ -1,4 +1,4 @@
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import {
   forEditAddLiabilityExpense,
   forEditAddLiabilityId,
@@ -14,6 +14,7 @@ import {
 import Button, { RedButton } from "./Button";
 
 const Liability = ({ liability }) => {
+  const { user } = useSelector((state) => state.liabilities);
   const dispatch = useDispatch();
 
   return (
@@ -53,7 +54,7 @@ const Liability = ({ liability }) => {
         <RedButton
           onClick={() => {
             dispatch(deleteLiability(liability.id));
-            dispatch(deleteData(liability.id));
+            dispatch(deleteData({ userId: user, id: liability.id }));
           }}
         >
           x
